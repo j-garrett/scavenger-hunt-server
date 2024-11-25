@@ -1,0 +1,15 @@
+{
+  "name": "scavenger-hunt-server-types-package",
+  "version": "1.0.0",
+  "main": "index.d.ts",
+  "types": "index.d.ts",
+  "files": [
+    "*.d.ts"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.0"
+  }
+}
