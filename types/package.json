@@ -1,5 +1,6 @@
 {
-  "name": "scavenger-hunt-server-types-package",
+  "name": "@types/scavenger-hunt-server",
+  "description": "TypeScript definitions for scavenger-hunt-server",
   "version": "1.0.0",
   "main": "index.d.ts",
   "types": "index.d.ts",

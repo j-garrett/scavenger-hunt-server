@@ -24,6 +24,7 @@ import { Hunt } from './hunts/entities/hunt.entity';
           entities: [Hunt],
           subscribers: [],
           migrations: [],
+          // TODO: autoLoadEntities sounds dangerous for prod DB
           autoLoadEntities: true,
         };
       },

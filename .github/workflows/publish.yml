@@ -46,10 +46,15 @@ jobs:
       - name: Generate Swagger spec
         run: npm run generate-swagger
 
-      - name: Build types
-        run: npm run build:types
+      - name: Build types package
+        run: |
+          cd types
+          npm install
+          npm run build
 
-      - name: Publish package
-        run: npm publish
+      - name: Publish types package
+        run: |
+          cd types
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
