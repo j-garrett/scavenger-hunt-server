@@ -1,11 +1,16 @@
-import { IsString, IsBoolean } from 'class-validator';
+import { IsString, IsBoolean, IsEnum } from 'class-validator';
+
+export enum AnswerType {
+  TEXT = 'text',
+  IMAGE = 'image',
+}
 
 export class AnswerDto {
   @IsString()
   value: string;
 
-  @IsString()
-  type: 'text' | 'image';
+  @IsEnum(AnswerType)
+  type: AnswerType;
 
   @IsBoolean()
   exact: boolean;
