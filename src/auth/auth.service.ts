@@ -1,6 +1,7 @@
 import {
   ConflictException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -16,12 +17,20 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.findByUsername(username);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
-      return result;
+    try {
+      const user = await this.usersService.findByUsername(username);
+      if (await bcrypt.compare(pass, user.password)) {
+        const { password, ...result } = user; // eslint-disable-line @typescript-eslint/no-unused-vars
+        return result;
+      } else {
+        throw new UnauthorizedException();
+      }
+    } catch (err) {
+      if (err instanceof NotFoundException) {
+        return null;
+      }
     }
-    throw new UnauthorizedException();
+    return null;
   }
 
   async login({
@@ -44,7 +53,7 @@ export class AuthService {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     const userWithHashedPassword = {
-      ...createUserDto,
+      username,
       password: hashedPassword,
     };
 

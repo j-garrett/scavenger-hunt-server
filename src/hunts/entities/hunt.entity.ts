@@ -13,11 +13,11 @@ export class Hunt {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt)
+  @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt, { cascade: true })
   steps: HuntStep[];
 
-  @Column()
-  description: string;
+  @Column({ nullable: true })
+  description?: string;
 
   @Column()
   name: string;
