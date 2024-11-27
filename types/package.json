@@ -1,7 +1,7 @@
 {
   "name": "@jon-garrett/scavenger-hunt-server",
   "description": "TypeScript definitions for scavenger-hunt-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "api.d.ts",
   "types": "api.d.ts",
   "files": [
