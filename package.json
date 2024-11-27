@@ -4,6 +4,8 @@
   "description": "",
   "author": "",
   "license": "UNLICENSED",
+  "main": "dist/main.js",
+  "types": "types/api.d.ts",
   "scripts": {
     "build": "nest build",
     "build:types": "openapi-typescript ./dist/swagger-spec.json --output types/api.d.ts",
