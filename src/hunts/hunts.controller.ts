@@ -37,7 +37,7 @@ export class HuntsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.huntsService.remove(+id);
+  async remove(@Param('id') id: number): Promise<void> {
+    return this.huntsService.remove(id);
   }
 }

@@ -1,24 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { HuntStep } from './hunt-step.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity()
 export class Hunt {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
-  answer: string;
-  // answer: {
-  //   exact: boolean;
-  //   type: 'text' | 'image';
-  //   value: string;
-  // };
-  @Column()
-  clue: string;
+
+  @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt)
+  steps: HuntStep[];
+
   @Column()
   description: string;
-  @Column()
-  latitude: number;
-  @Column()
-  longitude: number;
+
   @Column()
   name: string;
+
+  @ManyToOne(() => User, (user) => user.hunts, { nullable: false })
+  user: User;
 }

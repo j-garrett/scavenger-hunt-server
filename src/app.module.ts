@@ -3,6 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HuntsModule } from './hunts/hunts.module';
 import { Hunt } from './hunts/entities/hunt.entity';
+import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity';
+import { HuntStep } from './hunts/entities/hunt-step.entity';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -21,7 +25,7 @@ import { Hunt } from './hunts/entities/hunt.entity';
           database: 'scavenger',
           synchronize: true,
           logging: true,
-          entities: [Hunt],
+          entities: [Hunt, HuntStep, HuntStepAnswer, User],
           subscribers: [],
           migrations: [],
           // TODO: autoLoadEntities sounds dangerous for prod DB
@@ -31,6 +35,7 @@ import { Hunt } from './hunts/entities/hunt.entity';
       inject: [ConfigService],
     }),
     HuntsModule,
+    UsersModule,
   ],
   controllers: [],
   providers: [],
