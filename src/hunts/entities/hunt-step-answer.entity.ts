@@ -1,16 +1,16 @@
-import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm';
+import { Column, PrimaryGeneratedColumn, Entity } from 'typeorm'
 
 @Entity()
 export class HuntStepAnswer {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ default: false })
-  exact: boolean;
+  exact: boolean
 
   @Column()
-  type: 'text' | 'image';
+  type: 'text' | 'image'
 
   @Column()
-  value: string;
+  value: string
 }

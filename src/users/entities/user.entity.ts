@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Hunt } from '../../hunts/entities/hunt.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
+import { Hunt } from '../../hunts/entities/hunt.entity'
 
 export enum UserRole {
   USER = 'user',
@@ -9,17 +9,17 @@ export enum UserRole {
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ nullable: false })
-  username: string;
+  username: string
 
   @Column({ nullable: false })
-  password: string;
+  password: string
 
   @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-  role: UserRole;
+  role: UserRole
 
   @OneToMany(() => Hunt, (hunt) => hunt.user)
-  hunts: Hunt[];
+  hunts: Hunt[]
 }

@@ -4,23 +4,23 @@ import {
   ValidateNested,
   IsArray,
   IsNumber,
-} from 'class-validator';
-import { Type } from 'class-transformer';
-import { HuntStepDto } from './hunt-step.dto';
+} from 'class-validator'
+import { Type } from 'class-transformer'
+import { HuntStepDto } from './hunt-step.dto'
 
 export class CreateHuntDto {
   @IsNumber()
-  userId: number;
+  userId: number
 
   @IsString()
-  name: string;
+  name: string
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description?: string
 
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => HuntStepDto)
-  steps: HuntStepDto[];
+  steps: HuntStepDto[]
 }

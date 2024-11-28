@@ -1,27 +1,22 @@
-import {
-  IsString,
-  IsNumber,
-  ValidateNested,
-  IsOptional,
-} from 'class-validator';
-import { Type } from 'class-transformer';
-import { AnswerDto } from './answer.dto';
+import { IsString, IsNumber, ValidateNested, IsOptional } from 'class-validator'
+import { Type } from 'class-transformer'
+import { AnswerDto } from './answer.dto'
 
 export class HuntStepDto {
   @IsString()
-  clue: string;
+  clue: string
 
   @IsString()
   @IsOptional()
-  description?: string;
+  description?: string
 
   @IsNumber()
-  latitude: number;
+  latitude: number
 
   @IsNumber()
-  longitude: number;
+  longitude: number
 
   @ValidateNested()
   @Type(() => AnswerDto)
-  answer: AnswerDto;
+  answer: AnswerDto
 }

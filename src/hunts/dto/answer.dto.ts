@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsEnum } from 'class-validator';
+import { IsString, IsBoolean, IsEnum } from 'class-validator'
 
 export enum AnswerType {
   TEXT = 'text',
@@ -7,11 +7,11 @@ export enum AnswerType {
 
 export class AnswerDto {
   @IsString()
-  value: string;
+  value: string
 
   @IsEnum(AnswerType)
-  type: AnswerType;
+  type: AnswerType
 
   @IsBoolean()
-  exact: boolean;
+  exact: boolean
 }

@@ -4,24 +4,24 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
-} from 'typeorm';
-import { HuntStep } from './hunt-step.entity';
-import { User } from '../../users/entities/user.entity';
+} from 'typeorm'
+import { HuntStep } from './hunt-step.entity'
+import { User } from '../../users/entities/user.entity'
 
 @Entity()
 export class Hunt {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt, { cascade: true })
-  steps: HuntStep[];
+  steps: HuntStep[]
 
   @Column({ nullable: true })
-  description?: string;
+  description?: string
 
   @Column()
-  name: string;
+  name: string
 
   @ManyToOne(() => User, (user) => user.hunts, { nullable: false })
-  user: User;
+  user: User
 }

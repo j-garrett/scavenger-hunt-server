@@ -5,35 +5,35 @@ import {
   OneToOne,
   Entity,
   JoinColumn,
-} from 'typeorm';
-import { Hunt } from './hunt.entity';
-import { HuntStepAnswer } from 'src/hunts/entities/hunt-step-answer.entity';
+} from 'typeorm'
+import { Hunt } from './hunt.entity'
+import { HuntStepAnswer } from './hunt-step-answer.entity'
 
 @Entity()
 export class HuntStep {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ nullable: false })
-  clue: string;
+  clue: string
 
   @Column({ nullable: true })
-  description?: string;
+  description?: string
 
   @Column('double precision', { nullable: false })
-  latitude: number;
+  latitude: number
 
   @Column('double precision', { nullable: false })
-  longitude: number;
+  longitude: number
 
   @ManyToOne(() => Hunt, (hunt) => hunt.steps, {
     nullable: false,
   })
-  hunt: Hunt;
+  hunt: Hunt
 
   @OneToOne(() => HuntStepAnswer, (huntStepAnswer) => huntStepAnswer, {
     nullable: false,
   })
   @JoinColumn()
-  answer: HuntStepAnswer;
+  answer: HuntStepAnswer
 }
