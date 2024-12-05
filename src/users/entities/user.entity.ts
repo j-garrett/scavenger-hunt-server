@@ -1,17 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Hunt } from '../../hunts/entities/hunt.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+
+import { Hunt } from '../../hunts/entities/hunt.entity'
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ nullable: false })
-  username: string;
+  username: string
 
   @Column({ nullable: false })
-  password: string;
+  password: string
 
   @OneToMany(() => Hunt, (hunt) => hunt.user)
-  hunts: Hunt[];
+  hunts: Hunt[]
 }

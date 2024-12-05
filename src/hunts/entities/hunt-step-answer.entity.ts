@@ -1,20 +1,20 @@
-import { Column, PrimaryGeneratedColumn, OneToOne, Entity } from 'typeorm';
-import { HuntStep } from 'src/hunts/entities/hunt-step.entity';
+import { HuntStep } from 'src/hunts/entities/hunt-step.entity'
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class HuntStepAnswer {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column({ default: false })
-  exact: boolean;
+  exact: boolean
 
   @Column()
-  type: 'text' | 'image';
+  type: 'text' | 'image'
 
   @Column()
-  value: string;
+  value: string
 
   @OneToOne(() => HuntStep, (huntStep) => huntStep.answer)
-  huntStep: HuntStep;
+  huntStep: HuntStep
 }

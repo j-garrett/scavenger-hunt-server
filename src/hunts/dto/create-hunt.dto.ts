@@ -1,25 +1,25 @@
-import { IsString, IsInt, ValidateNested } from 'class-validator';
+import { IsInt, IsString, ValidateNested } from 'class-validator'
 
 class Answer {
   @IsString()
-  value: string;
+  value: string
   @IsString()
-  type: 'text' | 'image';
+  type: 'text' | 'image'
   @IsString()
-  exact: boolean;
+  exact: boolean
 }
 
 export class CreateHuntDto {
   @ValidateNested()
-  answer: Answer;
+  answer: Answer
   @IsString()
-  clue: string;
+  clue: string
   @IsString()
-  description?: string;
+  description?: string
   @IsInt()
-  latitude: number;
+  latitude: number
   @IsInt()
-  longitude: number;
+  longitude: number
   @IsString()
-  name: string;
+  name: string
 }
