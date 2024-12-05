@@ -1,43 +1,44 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { HuntsModule } from './hunts/hunts.module';
-import { Hunt } from './hunts/entities/hunt.entity';
-import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity';
-import { HuntStep } from './hunts/entities/hunt-step.entity';
-import { User } from './users/entities/user.entity';
-import { UsersModule } from './users/users.module';
+import { Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { Hunt } from './hunts/entities/hunt.entity'
+import { HuntStep } from './hunts/entities/hunt-step.entity'
+import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity'
+import { HuntsModule } from './hunts/hunts.module'
+import { User } from './users/entities/user.entity'
+import { UsersModule } from './users/users.module'
 
 @Module({
+  controllers: [],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // makes the ConfigModule available globally
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         return {
-          type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'postgres',
-          password: configService.get<string>('POSTGRES_PASSWORD'),
-          database: 'scavenger',
-          synchronize: true,
-          logging: true,
-          entities: [Hunt, HuntStep, HuntStepAnswer, User],
-          subscribers: [],
-          migrations: [],
           // TODO: autoLoadEntities sounds dangerous for prod DB
           autoLoadEntities: true,
-        };
+          database: 'scavenger',
+          entities: [Hunt, HuntStep, HuntStepAnswer, User],
+          host: 'localhost',
+          logging: true,
+          migrations: [],
+          password: configService.get<string>('POSTGRES_PASSWORD'),
+          port: 5432,
+          subscribers: [],
+          synchronize: true,
+          type: 'postgres',
+          username: 'postgres',
+        }
       },
-      inject: [ConfigService],
     }),
     HuntsModule,
     UsersModule,
   ],
-  controllers: [],
   providers: [],
 })
 export class AppModule {}
