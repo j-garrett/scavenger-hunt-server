@@ -38,13 +38,23 @@ jobs:
         run: npm install
 
       - name: Set environment variables
-        run: echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
+        run: |
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> $GITHUB_ENV
+          echo "IS_PUBLIC_KEY=${{ secrets.IS_PUBLIC_KEY }}" >> $GITHUB_ENV
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> $GITHUB_ENV
+          echo "POSTGRES_USER=postgres" >> $GITHUB_ENV
+          echo "POSTGRES_PORT=5432" >> $GITHUB_ENV
+          echo "POSTGRES_HOST=localhost" >> $GITHUB_ENV
+          echo "POSTGRES_DB=scavenger" >> $GITHUB_ENV
 
       - name: Build project
         run: npm run build
 
       - name: Generate Swagger spec
         run: npm run generate-swagger
+
+      - name: Build types
+        run: npm run build:types
 
       - name: Build types package
         run: |
