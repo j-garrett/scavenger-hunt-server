@@ -1,11 +1,12 @@
 import {
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
+
 import { Hunt } from './hunt.entity'
 import { HuntStepAnswer } from './hunt-step-answer.entity'
 

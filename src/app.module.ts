@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { HuntsModule } from './hunts/hunts.module'
+
+import { AuthModule } from './auth/auth.module'
 import { Hunt } from './hunts/entities/hunt.entity'
-import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity'
 import { HuntStep } from './hunts/entities/hunt-step.entity'
+import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity'
+import { HuntsModule } from './hunts/hunts.module'
 import { UserEntity } from './users/entities/user.entity'
 import { UsersModule } from './users/users.module'
-import { AuthModule } from './auth/auth.module'
 
 @Module({
   controllers: [],

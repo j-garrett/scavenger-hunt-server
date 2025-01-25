@@ -1,11 +1,12 @@
+import { Type } from 'class-transformer'
 import {
-  IsString,
-  IsOptional,
-  ValidateNested,
   IsArray,
   IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
 } from 'class-validator'
-import { Type } from 'class-transformer'
+
 import { HuntStepDto } from './hunt-step.dto'
 
 export class CreateHuntDto {

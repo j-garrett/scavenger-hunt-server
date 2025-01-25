@@ -1,12 +1,13 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
-import { HuntStep } from './hunt-step.entity'
+
 import { UserEntity } from '../../users/entities/user.entity'
+import { HuntStep } from './hunt-step.entity'
 
 @Entity()
 export class Hunt {
