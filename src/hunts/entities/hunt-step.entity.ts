@@ -2,10 +2,10 @@ import { HuntStepAnswer } from 'src/hunts/entities/hunt-step-answer.entity'
 import {
   Column,
   Entity,
-  Entity,
   JoinColumn,
   ManyToOne,
   OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
 
 import { Hunt } from './hunt.entity'
