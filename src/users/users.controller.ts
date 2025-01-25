@@ -4,12 +4,13 @@ import {
   Controller,
   Delete,
   ForbiddenException,
+  Get,
+  Param,
   Post,
   Req,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common'
-import { Get, Param } from '@nestjs/common'
 import { AuthService } from 'auth/auth.service'
 import { Roles } from 'auth/roles.decorator'
 import { RolesGuard } from 'auth/roles.guard'
@@ -44,9 +45,23 @@ export class UsersController {
     return instanceToPlain(await this.usersService.findAll())
   }
 
+  // TODO: add public profile endpoint
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(
+    @Param('id') id: string,
+    // req relies on user object being attached to the request by the JwtAuthGuard
+    @Req() req: { user?: { role: UserRoles; id: number } },
+  ) {
+    const user = req.user
+    const getTargetId = Number(id)
+
+    if (
+      !user ||
+      (user.role !== UserRoles.SUPERUSER && user.id !== getTargetId)
+    ) {
+      throw new ForbiddenException()
+    }
     return instanceToPlain(
       await this.usersService.findOne(Number(id)),
     ) as LoadedUserDto

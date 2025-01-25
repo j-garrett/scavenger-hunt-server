@@ -1,4 +1,5 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common'
+import { Body, Controller, HttpCode, Post, Res } from '@nestjs/common'
+import { Response } from 'express'
 
 import { UserDto } from '../users/dto/user.dto'
 import { AuthService } from './auth.service'
@@ -9,12 +10,26 @@ export class AuthController {
 
   @HttpCode(200)
   @Post('login')
-  async login(@Body() loginDto: UserDto) {
-    return this.authService.login(loginDto)
+  async login(
+    @Body() loginDto: UserDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const loginResult = await this.authService.login(loginDto)
+    response.cookie('accessToken', loginResult.accessToken, {
+      httpOnly: true,
+    })
+    return loginResult
   }
 
   @Post('register')
-  async register(@Body() createUserDto: UserDto) {
-    return this.authService.register(createUserDto)
+  async register(
+    @Body() createUserDto: UserDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const registerResult = await this.authService.register(createUserDto)
+    response.cookie('accessToken', registerResult?.accessToken, {
+      httpOnly: true,
+    })
+    return registerResult
   }
 }

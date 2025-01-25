@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common'
 import { NestFactory, Reflector } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { OpenAPIObject } from '@nestjs/swagger'
+import * as cookieParser from 'cookie-parser'
 import * as fs from 'fs'
 import * as path from 'path'
 import { InstanceToPlainInterceptor } from 'src/instance-to-plain.interceptor'
@@ -45,7 +46,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:3001',
   })
-
+  app.use(cookieParser())
   await initializeSwagger(app)
   await app.listen(process.env.PORT ?? 3000)
 }
