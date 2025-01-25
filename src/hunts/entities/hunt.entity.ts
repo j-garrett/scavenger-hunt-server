@@ -14,7 +14,9 @@ export class Hunt {
   @PrimaryGeneratedColumn()
   id: number
 
-  @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt, { cascade: true })
+  @OneToMany(() => HuntStep, (huntStep) => huntStep.hunt, {
+    nullable: true,
+  })
   steps: HuntStep[]
 
   @Column({ nullable: true })
@@ -23,6 +25,9 @@ export class Hunt {
   @Column()
   name: string
 
-  @ManyToOne(() => UserEntity, (user) => user.hunts, { nullable: false })
+  @Column({ default: true })
+  isPublic: boolean
+
+  @ManyToOne(() => UserEntity, (user) => user.hunts, { nullable: true })
   user: UserEntity
 }

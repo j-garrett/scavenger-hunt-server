@@ -19,19 +19,20 @@ import { HuntsService } from './hunts.service'
 export class HuntsController {
   constructor(private readonly huntsService: HuntsService) {}
 
-  @UseGuards(JwtAuthGuard)
+  // TODO: add private hunts
+  // @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<Hunt[]> {
     return this.huntsService.findAll()
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() createHuntDto: CreateHuntDto) {
     return this.huntsService.create(createHuntDto)
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.huntsService.findOne(+id)

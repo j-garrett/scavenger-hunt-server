@@ -1,4 +1,4 @@
-import { IsString, IsBoolean, IsEnum } from 'class-validator'
+import { IsBoolean, IsEnum, IsString } from 'class-validator'
 
 export enum AnswerType {
   TEXT = 'text',
