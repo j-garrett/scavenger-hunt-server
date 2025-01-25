@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common'
-import { HuntsService } from './hunts.service'
-import { HuntsController } from './hunts.controller'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
 import { Hunt } from './entities/hunt.entity'
-import { HuntStepAnswer } from './entities/hunt-step-answer.entity'
 import { HuntStep } from './entities/hunt-step.entity'
+import { HuntStepAnswer } from './entities/hunt-step-answer.entity'
+import { HuntsController } from './hunts.controller'
+import { HuntsService } from './hunts.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Hunt, HuntStep, HuntStepAnswer])],
   controllers: [HuntsController],
+  imports: [TypeOrmModule.forFeature([Hunt, HuntStep, HuntStepAnswer])],
   providers: [HuntsService],
 })
 export class HuntsModule {}

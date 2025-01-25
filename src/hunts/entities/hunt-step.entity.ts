@@ -1,11 +1,13 @@
+import { HuntStepAnswer } from 'src/hunts/entities/hunt-step-answer.entity'
 import {
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
+  Entity,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToOne,
 } from 'typeorm'
+
 import { Hunt } from './hunt.entity'
 import { HuntStepAnswer } from './hunt-step-answer.entity'
 
