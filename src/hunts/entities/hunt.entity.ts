@@ -6,7 +6,7 @@ import {
   OneToMany,
 } from 'typeorm'
 import { HuntStep } from './hunt-step.entity'
-import { User } from '../../users/entities/user.entity'
+import { UserEntity } from '../../users/entities/user.entity'
 
 @Entity()
 export class Hunt {
@@ -22,6 +22,6 @@ export class Hunt {
   @Column()
   name: string
 
-  @ManyToOne(() => User, (user) => user.hunts, { nullable: false })
-  user: User
+  @ManyToOne(() => UserEntity, (user) => user.hunts, { nullable: false })
+  user: UserEntity
 }

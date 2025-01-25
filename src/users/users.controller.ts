@@ -1,14 +1,29 @@
-import { Controller, Post, Body, UseGuards, Delete } from '@nestjs/common'
-import { UsersService } from './users.service'
-import { UserDto } from './dto/user.dto'
-import { User, UserRole } from './entities/user.entity'
+import {
+  Body,
+  ClassSerializerInterceptor,
+  Controller,
+  Delete,
+  ForbiddenException,
+  Post,
+  Req,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common'
 import { Get, Param } from '@nestjs/common'
+import { AuthService } from 'auth/auth.service'
+import { Roles } from 'auth/roles.decorator'
+import { RolesGuard } from 'auth/roles.guard'
+import { instanceToPlain } from 'class-transformer'
+import { Request } from 'express'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { AuthService } from 'src/auth/auth.service'
-import { RolesGuard } from 'src/auth/roles.guard'
-import { Roles } from 'src/auth/roles.decorator'
+import { LoadedUserDto } from 'src/users/dto/loaded-user.dto'
+
+import { UserDto } from './dto/user.dto'
+import { UserRoles } from './entities/user.entity'
+import { UsersService } from './users.service'
 
 @Controller('users')
+@UseInterceptors(ClassSerializerInterceptor)
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
@@ -16,28 +31,48 @@ export class UsersController {
   ) {}
 
   @Post()
-  async create(
-    @Body() createUserDto: UserDto,
-  ): Promise<{ access_token: string }> {
-    return this.authService.register(createUserDto)
+  async create(@Body() createUserDto: UserDto) {
+    return instanceToPlain(this.authService.register(createUserDto))
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(UserRole.SUPERUSER)
+  @Roles(UserRoles.SUPERUSER)
   @Get()
-  async findAll(): Promise<User[]> {
-    return this.usersService.findAll()
+  async findAll() {
+    console.log('test some guards please')
+
+    return instanceToPlain(await this.usersService.findAll())
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(Number(id))
+  async findOne(@Param('id') id: string) {
+    return instanceToPlain(
+      await this.usersService.findOne(Number(id)),
+    ) as LoadedUserDto
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.usersService.remove(Number(id))
+  async remove(
+    @Param('id') id: string,
+    // req relies on user object being attached to the request by the JwtAuthGuard
+    @Req() req: { user?: { role: UserRoles; id: number } },
+  ) {
+    const user = req.user
+    const deleteTargetId = Number(id)
+
+    if (
+      !user ||
+      (user.role !== UserRoles.SUPERUSER && user.id !== deleteTargetId)
+    ) {
+      throw new ForbiddenException('You are not allowed to delete this user')
+    }
+
+    await this.usersService.remove(deleteTargetId)
+    return {
+      message: `User with id ${id} deleted`,
+      statusCode: 200,
+    }
   }
 }

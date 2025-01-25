@@ -1,18 +1,19 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
   UseGuards,
 } from '@nestjs/common'
-import { HuntsService } from './hunts.service'
+import { JwtAuthGuard } from 'auth/jwt-auth.guard'
+import { Hunt } from 'src/hunts/entities/hunt.entity'
+
 import { CreateHuntDto } from './dto/create-hunt.dto'
 import { UpdateHuntDto } from './dto/update-hunt.dto'
-import { Hunt } from 'src/hunts/entities/hunt.entity'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { HuntsService } from './hunts.service'
 
 @Controller('hunts')
 export class HuntsController {

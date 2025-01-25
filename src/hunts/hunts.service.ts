@@ -3,7 +3,7 @@ import { CreateHuntDto } from './dto/create-hunt.dto'
 import { UpdateHuntDto } from './dto/update-hunt.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Hunt } from 'src/hunts/entities/hunt.entity'
+import { Hunt } from 'hunts/entities/hunt.entity'
 
 @Injectable()
 export class HuntsService {

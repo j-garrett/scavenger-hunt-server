@@ -1,25 +1,34 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm'
-import { Hunt } from '../../hunts/entities/hunt.entity'
+import { Exclude } from 'class-transformer'
+import { Hunt } from 'src/hunts/entities/hunt.entity'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
-export enum UserRole {
-  USER = 'user',
+export enum UserRoles {
+  ADMIN = 'admin',
+  GUEST = 'guest',
   SUPERUSER = 'superuser',
+  USER = 'user',
 }
 
 @Entity()
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column({ nullable: false })
-  username: string
+  // @Column({ nullable: false, unique: true })
+  email: string
 
   @Column({ nullable: false })
+  @Exclude()
   password: string
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
-  role: UserRole
+  @Column({ default: UserRoles.USER, type: 'varchar' })
+  role: UserRoles
 
   @OneToMany(() => Hunt, (hunt) => hunt.user)
   hunts: Hunt[]
+
+  constructor(partial: Partial<UserEntity>) {
+    Object.assign(this, partial)
+  }
 }

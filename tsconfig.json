@@ -11,7 +11,10 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "paths": {
-      "src/*": ["./src/*"]
+      "src/*": ["src/*"],
+      "auth/*": ["src/auth/*"],
+      "hunts/*": ["src/hunts/*"],
+      "users/*": ["src/users/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
@@ -20,5 +23,6 @@
     "strictBindCallApply": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }

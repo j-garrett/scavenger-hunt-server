@@ -1,13 +1,15 @@
-import { NestFactory } from '@nestjs/core'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
-import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common'
+import { INestApplication } from '@nestjs/common'
+import { NestFactory, Reflector } from '@nestjs/core'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { OpenAPIObject } from '@nestjs/swagger'
 import * as fs from 'fs'
 import * as path from 'path'
-import { INestApplication } from '@nestjs/common'
-import { OpenAPIObject } from '@nestjs/swagger'
+import { InstanceToPlainInterceptor } from 'src/instance-to-plain.interceptor'
 
-async function initializeSwagger(app: INestApplication): Promise<void> {
+import { AppModule } from './app.module'
+
+export async function initializeSwagger(app: INestApplication): Promise<void> {
   const config = new DocumentBuilder()
     .setTitle('Scavenger Hunt API')
     .setDescription('API endpoints for building a scavenger hunt')
@@ -35,6 +37,14 @@ async function bootstrap() {
       whitelist: true,
     }),
   )
+  app.useGlobalInterceptors(
+    new ClassSerializerInterceptor(app.get(Reflector)),
+    new InstanceToPlainInterceptor(),
+  )
+  // Enable CORS and allow requests from port 3001
+  app.enableCors({
+    origin: 'http://localhost:3001',
+  })
 
   await initializeSwagger(app)
   await app.listen(process.env.PORT ?? 3000)
