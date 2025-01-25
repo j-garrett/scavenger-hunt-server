@@ -1,4 +1,3 @@
-import { HuntStepAnswer } from 'src/hunts/entities/hunt-step-answer.entity'
 import {
   Column,
   Entity,

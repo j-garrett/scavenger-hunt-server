@@ -5,7 +5,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm'
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 
 import { UserEntity } from '../../users/entities/user.entity'
 import { HuntStep } from './hunt-step.entity'
