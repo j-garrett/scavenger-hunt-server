@@ -1,5 +1,4 @@
-import { HuntStep } from 'src/hunts/entities/hunt-step.entity'
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class HuntStepAnswer {
@@ -14,7 +13,4 @@ export class HuntStepAnswer {
 
   @Column()
   value: string
-
-  @OneToOne(() => HuntStep, (huntStep) => huntStep.answer)
-  huntStep: HuntStep
 }

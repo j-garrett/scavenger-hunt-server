@@ -2,11 +2,12 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { AuthModule } from './auth/auth.module'
 import { Hunt } from './hunts/entities/hunt.entity'
 import { HuntStep } from './hunts/entities/hunt-step.entity'
 import { HuntStepAnswer } from './hunts/entities/hunt-step-answer.entity'
 import { HuntsModule } from './hunts/hunts.module'
-import { User } from './users/entities/user.entity'
+import { UserEntity } from './users/entities/user.entity'
 import { UsersModule } from './users/users.module'
 
 @Module({
@@ -19,25 +20,31 @@ import { UsersModule } from './users/users.module'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
+        const isTest = configService.get<string>('NODE_ENV') === 'test'
+        console.log('isTest:', isTest)
         return {
-          // TODO: autoLoadEntities sounds dangerous for prod DB
           autoLoadEntities: true,
-          database: 'scavenger',
-          entities: [Hunt, HuntStep, HuntStepAnswer, User],
-          host: 'localhost',
-          logging: true,
-          migrations: [],
-          password: configService.get<string>('POSTGRES_PASSWORD'),
-          port: 5432,
-          subscribers: [],
+          database: isTest
+            ? ':memory:'
+            : configService.get<string>('POSTGRES_DB'),
+          entities: [Hunt, HuntStep, HuntStepAnswer, UserEntity],
+          logging: !isTest,
           synchronize: true,
-          type: 'postgres',
-          username: 'postgres',
+          type: isTest ? 'sqlite' : 'postgres',
+          ...(isTest
+            ? {}
+            : {
+                host: configService.get<string>('POSTGRES_HOST'),
+                password: configService.get<string>('POSTGRES_PASSWORD'),
+                port: configService.get<number>('POSTGRES_PORT'),
+                username: configService.get<string>('POSTGRES_USER'),
+              }),
         }
       },
     }),
     HuntsModule,
     UsersModule,
+    AuthModule,
   ],
   providers: [],
 })

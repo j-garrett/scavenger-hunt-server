@@ -2,12 +2,14 @@ import { HuntStepAnswer } from 'src/hunts/entities/hunt-step-answer.entity'
 import {
   Column,
   Entity,
+  Entity,
+  JoinColumn,
   ManyToOne,
   OneToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm'
 
 import { Hunt } from './hunt.entity'
+import { HuntStepAnswer } from './hunt-step-answer.entity'
 
 @Entity()
 export class HuntStep {
@@ -17,8 +19,8 @@ export class HuntStep {
   @Column({ nullable: false })
   clue: string
 
-  @Column()
-  description: string
+  @Column({ nullable: true })
+  description?: string
 
   @Column('double precision', { nullable: false })
   latitude: number
@@ -31,8 +33,9 @@ export class HuntStep {
   })
   hunt: Hunt
 
-  @OneToOne(() => HuntStepAnswer, (huntStepAnswer) => huntStepAnswer.huntStep, {
+  @OneToOne(() => HuntStepAnswer, (huntStepAnswer) => huntStepAnswer, {
     nullable: false,
   })
+  @JoinColumn()
   answer: HuntStepAnswer
 }

@@ -1,7 +1,0 @@
-/* eslint-disable */
-export default async () => {
-    const t = {
-        ["./hunts/entities/hunt.entity"]: await import("./hunts/entities/hunt.entity")
-    };
-    return { "@nestjs/swagger": { "models": [[import("./hunts/dto/create-hunt.dto"), { "CreateHuntDto": { clue: { required: true, type: () => String }, description: { required: false, type: () => String }, latitude: { required: true, type: () => Number }, longitude: { required: true, type: () => Number }, name: { required: true, type: () => String } } }], [import("./hunts/dto/update-hunt.dto"), { "UpdateHuntDto": {} }], [import("./hunts/entities/hunt.entity"), { "Hunt": { answer: { required: true, type: () => ({ exact: { required: true, type: () => Boolean }, type: { required: true, type: () => Object }, value: { required: true, type: () => String } }) }, clue: { required: true, type: () => String }, description: { required: true, type: () => String }, id: { required: true, type: () => Number }, latitude: { required: true, type: () => Number }, longitude: { required: true, type: () => Number }, name: { required: true, type: () => String } } }]], "controllers": [[import("./app.controller"), { "AppController": { "getHello": { type: String } } }], [import("./hunts/hunts.controller"), { "HuntsController": { "create": { type: String }, "findAll": { type: [t["./hunts/entities/hunt.entity"].Hunt] }, "findOne": { type: String }, "update": { type: String }, "remove": { type: String } } }]] } };
-};

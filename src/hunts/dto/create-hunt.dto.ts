@@ -1,25 +1,27 @@
-import { IsInt, IsString, ValidateNested } from 'class-validator'
+import { Type } from 'class-transformer'
+import {
+  IsArray,
+  IsNumber,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator'
 
-class Answer {
-  @IsString()
-  value: string
-  @IsString()
-  type: 'text' | 'image'
-  @IsString()
-  exact: boolean
-}
+import { HuntStepDto } from './hunt-step.dto'
 
 export class CreateHuntDto {
-  @ValidateNested()
-  answer: Answer
-  @IsString()
-  clue: string
-  @IsString()
-  description?: string
-  @IsInt()
-  latitude: number
-  @IsInt()
-  longitude: number
+  @IsNumber()
+  userId: number
+
   @IsString()
   name: string
+
+  @IsString()
+  @IsOptional()
+  description?: string
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => HuntStepDto)
+  steps: HuntStepDto[]
 }

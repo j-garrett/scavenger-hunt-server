@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Hunt } from 'src/hunts/entities/hunt.entity'
+import { Hunt } from 'hunts/entities/hunt.entity'
 import { Repository } from 'typeorm'
 
 import { CreateHuntDto } from './dto/create-hunt.dto'
