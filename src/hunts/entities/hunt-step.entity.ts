@@ -1,11 +1,12 @@
 import {
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  OneToOne,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm'
+
 import { Hunt } from './hunt.entity'
 import { HuntStepAnswer } from './hunt-step-answer.entity'
 
@@ -26,13 +27,12 @@ export class HuntStep {
   @Column('double precision', { nullable: false })
   longitude: number
 
-  @ManyToOne(() => Hunt, (hunt) => hunt.steps, {
-    nullable: false,
-  })
+  @ManyToOne(() => Hunt, (hunt) => hunt.steps, { nullable: false })
   hunt: Hunt
 
   @OneToOne(() => HuntStepAnswer, (huntStepAnswer) => huntStepAnswer, {
-    nullable: false,
+    cascade: true,
+    nullable: true,
   })
   @JoinColumn()
   answer: HuntStepAnswer

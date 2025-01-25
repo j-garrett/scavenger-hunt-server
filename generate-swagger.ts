@@ -1,9 +1,10 @@
 // FILE: generate-swagger.ts
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { AppModule } from './src/app.module'
 import * as fs from 'fs'
 import * as path from 'path'
+
+import { AppModule } from './src/app.module'
 
 async function generateSwaggerSpec() {
   const app = await NestFactory.create(AppModule)

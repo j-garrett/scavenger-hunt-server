@@ -1,5 +1,6 @@
-import { IsString, IsNumber, ValidateNested, IsOptional } from 'class-validator'
 import { Type } from 'class-transformer'
+import { IsNumber, IsOptional, IsString, ValidateNested } from 'class-validator'
+
 import { AnswerDto } from './answer.dto'
 
 export class HuntStepDto {
